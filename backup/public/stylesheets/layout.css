@@ -86,6 +86,8 @@ label {
   pointer-events: none;
   font-size: 22px;
 }
+
+
 label .req {
   margin: 2px;
   color: #2196f3;
@@ -119,6 +121,9 @@ input, textarea {
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
 }
+
+
+
 input:focus, textarea:focus {
   outline: 0;
   border-color: #2196f3;
@@ -196,7 +201,6 @@ textarea {
 }
 
 .header{
-  /* background: white; */
   height: 0;
 }
 
@@ -217,7 +221,7 @@ body {
   width: 500px;
   margin: auto;
   position: absolute;
-  top: calc(6% - 640px);
+  top: calc(30% - 640px);
   right: 215px;
   bottom: 0;
   left: 0;
