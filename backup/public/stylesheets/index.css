@@ -1,0 +1,41 @@
+.wrap-info{
+  color: white;
+  border: 1px solid;
+  padding: 22px 20px;
+}
+
+.info{
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+}
+
+.wrap-chain{
+  margin-top: 40px;
+  margin-left: 40px;
+  border: 3px solid white;
+  width: 900px;
+  margin-bottom: 100px;
+}
+
+.info-send{
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+  margin-left: 39px;
+  margin-top: 46px;
+  margin-bottom: -13px;
+}
+
+.input-create{
+  padding-left: 12px;
+  height: 46px;
+  color: white;
+}
+
+.info-list,
+.info-history{
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+}

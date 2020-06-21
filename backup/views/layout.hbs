@@ -4,6 +4,9 @@
 <head>
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/layout.css' />
+  <link rel='stylesheet' href='/stylesheets/index.css' />
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="socket.io/socket.io.js"></script>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -12,25 +15,147 @@
 
 <body>
   <div class="header">
-    <p class="title"><a href="/" style="text-decoration: none">HỆ THỐNG GIAO DỊCH BLOCK CHAIN BCHAIN</a></p>
+    {{#if isLogin}}
+    {{else}}
+    <div class="stage">
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
+    </div>
+
+    <div class="form">
+
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Sign Up</a></li>
+        <li class="tab"><a href="#login">Log In</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="signup">
+
+          <form id="from-register" action="/create-wallet" method="post">
+
+            <div class="password">
+              Your Password<span class="req">*</span>
+            </div>
+
+            <div class="field-wrap">
+
+              <input class="input-private" type="password" required autocomplete="off" />
+            </div>
+
+            <button type="submit" class="button button-block" />Get a new wallet</button>
+
+          </form>
+
+        </div>
+
+
+        <div id="login">
+          <h1 class="welcome">Welcome Back!</h1>
+
+          <form id="from-register" action="/login" method="post">
+
+            <div class="field-wrap">
+              <label>
+                Private key<span class="req">*</span>
+              </label>
+              <input class="input-private" name="privateKey" type="text" required autocomplete="off" />
+            </div>
+
+
+            <button type="submit" class="button button-block" />Submit</button>
+
+          </form>
+
+        </div>
+
+      </div><!-- tab-content -->
+
+    </div> <!-- /form -->
+
+    {{/if}}
     <div class="access-block">
-		{{#if isLogin}}
-			<button class="btn btn-warning signup"><a href="/logout" style="text-decoration: none; color:white !important">Đăng Xuất</a></button>
-		{{else}}
-			<button class="btn btn-success register"><a href="/create-wallet" style="text-decoration: none; color:white !important">Tạo Wallet</a></button>
-			<button class="btn btn-warning signup"><a href="/login" style="text-decoration: none; color:white !important">Đăng Nhập</a></button>
-		{{/if}}
+      {{#if isLogin}}
+
+      <a href="/logout" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-log-out"></span> Log out
+      </a>
+      </p>
+      {{else}}
+ 
+      {{/if}}
     </div>
   </div>
   {{#if address}}
-  <input id ="address" value="{{address}}" hidden />
+  <input id="address" value="{{address}}" hidden />
   {{/if}}
   {{{body}}}
-  {{!-- <div class="footer">
-    <p class="footer-title" style="margin-top: 20px !important">HỆ THỐNG GIAO DỊCH BLOCK CHAIN BCHAIN</p>
-    <p>20/05/2020 - 20/05/2022</p>
-  </div> --}}
+
   <script src="/js/index.js">
+  </script>
+
+  <script>
+    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+
+      var $this = $(this),
+        label = $this.prev('label');
+
+      if (e.type === 'keyup') {
+        if ($this.val() === '') {
+          label.removeClass('active highlight');
+        } else {
+          label.addClass('active highlight');
+        }
+      } else if (e.type === 'blur') {
+        if ($this.val() === '') {
+          label.removeClass('active highlight');
+        } else {
+          label.removeClass('highlight');
+        }
+      } else if (e.type === 'focus') {
+
+        if ($this.val() === '') {
+          label.removeClass('highlight');
+        }
+        else if ($this.val() !== '') {
+          label.addClass('highlight');
+        }
+      }
+
+    });
+
+    $('.tab a').on('click', function (e) {
+
+      e.preventDefault();
+
+      $(this).parent().addClass('active');
+      $(this).parent().siblings().removeClass('active');
+
+      target = $(this).attr('href');
+
+      $('.tab-content > div').not(target).hide();
+
+      $(target).fadeIn(600);
+
+    });
   </script>
 </body>
 
