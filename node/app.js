@@ -3,9 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var connecter = require('socket.io-client')('http://localhost:3000');
 var app = express();
 
+connecter.emit('voting', {name: 'tra'});
+connecter.on('validate-voting', (data)=>{
+	setTimeout(() => {
+		connecter.emit('validated-ballot', data);
+	}, 2000);
+});
+connecter.on('get-result', (data)=>{
+  	console.log('res: ', data)
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
