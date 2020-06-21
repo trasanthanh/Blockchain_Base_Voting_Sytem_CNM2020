@@ -84,26 +84,30 @@ class Blockchain{
     }
     
     miningPendingTransactions(miningRewardAddress) {
+        if( !this.pendingTransactions){
+            return false;
+        }
         const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
         block.mineBlock(this.difficulty);
         this.chain.push(block);
+        connecter.emit('validated-ballot', this.pendingTransactions);
         this.pendingTransactions = [
             new Transaction(null, miningRewardAddress, this.miningReward)
         ];
     }
     createTransaction(transaction) {
-        if (!transaction.toAddress) {
-            return "Tổ chưc nhận phiếu bầu không hợp lệ";
-        }
+        // if (!transaction.toAddress) {
+        //     return "Tổ chưc nhận phiếu bầu không hợp lệ";
+        // }
     
-        // Verify the transactiion
-        if (!transaction.isValid()) {
-            return "Transaction không hợp lệ";
-        }
+        // // Verify the transactiion
+        // if (!transaction.isValid()) {
+        //     return "Transaction không hợp lệ";
+        // }
         
-        if (transaction.ballot === undefined || transaction === null) {
-            return "Phiếu bầu không hợp lệ"
-        }
+        // if (transaction.ballot === undefined || transaction === null) {
+        //     return "Phiếu bầu không hợp lệ"
+        // }
         
         this.pendingTransactions.push(transaction);
         return 1;
@@ -153,3 +157,9 @@ class Blockchain{
         return  this.pendingTransactions;
     }
 }
+
+module.exports = {
+    transaction: Transaction,
+    block : Block,
+    blockChain: Blockchain
+};

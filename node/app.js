@@ -3,18 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var connecter = require('socket.io-client')('http://localhost:3000');
+global.connecter = require('socket.io-client')('http://localhost:3000');
 var app = express();
-
+var miner = new (require('./miner/block-chain').blockChain)();
 connecter.emit('voting', {name: 'tra'});
 connecter.on('validate-voting', (data)=>{
-	setTimeout(() => {
-		connecter.emit('validated-ballot', data);
-	}, 2000);
+	miner.createTransaction(data);
+	miner.miningPendingTransactions();
+	console.log(miner.getLatestBlock())
 });
 connecter.on('get-result', (data)=>{
   	console.log('res: ', data)
-})
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -41,4 +41,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+module.exports = {
+	app: app,
+	connecter : connecter
+};
