@@ -66,8 +66,10 @@ class Blockchain{
     }
     setDiffculty(){
         if(chain%10 == 0 ){
-            if(chain[this.chain.length -1].timestamp - chain[this.chain.length -10].timestamp < 1000 ){
-                this.difficulty++;
+            if(chain[this.chain.length -1].timestamp - chain[this.chain.length -10].timestamp <= 1000*60 ){ // trong 1p nếu trên 10 gd=>tăng độ khoa=s
+                this.difficulty--;
+            } else {
+                this.difficulty ++;
             }
         }
     }
@@ -91,20 +93,20 @@ class Blockchain{
     }
     createTransaction(transaction) {
         if (!transaction.toAddress) {
-            return "Người nhận phiếu bầu không hợp lệ";
-          }
-      
-          // Verify the transactiion
-          if (!transaction.isValid()) {
-           return "Transaction không hợp lệ";
-          }
-          
-          if (! transaction.ballot) {
-           return "Phiếu bầu không hợp lệ"
-          }
-          
-          this.pendingTransactions.push(transaction);
-          return 1;
+            return "Tổ chưc nhận phiếu bầu không hợp lệ";
+        }
+    
+        // Verify the transactiion
+        if (!transaction.isValid()) {
+            return "Transaction không hợp lệ";
+        }
+        
+        if (transaction.ballot === undefined || transaction === null) {
+            return "Phiếu bầu không hợp lệ"
+        }
+        
+        this.pendingTransactions.push(transaction);
+        return 1;
     }
 
     isChainValid() {
