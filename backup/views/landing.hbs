@@ -5,6 +5,7 @@
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/layout.css' />
+  <link rel='stylesheet' href='/stylesheets/index.css' />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="socket.io/socket.io.js"></script>
@@ -92,6 +93,15 @@
 
     {{/if}}
     <div class="access-block">
+      {{#if isLogin}}
+
+      <a href="/logout" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-log-out"></span> Log out
+      </a>
+      </p>
+      {{else}}
+ 
+      {{/if}}
     </div>
   </div>
   {{#if address}}

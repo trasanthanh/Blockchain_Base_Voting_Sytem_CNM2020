@@ -1,130 +1,436 @@
-<div style="display: inline-flex;">
-    <div style="margin-top:20px; margin-left: 40px; max-width:900px; float:left">
-        <p style="font-weight: bold; color: #74115a">THÔNG TIN VÍ BCHAIN</p>
-        <div style="margin-left: 20px">
-            <p style="max-width: 50%; overflow-wrap: break-word; max-width: 700px "> Address : <span id="address"
-                    style="font-weight: bold;">{{address}}</span></p>
-            <p style="max-width: 50%; overflow-wrap: break-word; max-width: 700px ">Private key: <span id="privatekey"
-                    style="font-weight: bold;">{{privateKey}}</span></p>
-            <p>Số dư: <span id ="total">{{balance}}</span> BTC</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Voting DApp</title>
+    <link rel='stylesheet' href='/stylesheets/index.css' />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    {{!-- <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'> --}}
+</head>
+
+<body class="container">
+    {{!-- test --}}
+
+    <div class="hero-section">
+        <div class="about-text hover-target">about</div>
+        <div class="contact-text hover-target">contact</div>
+        <div class="section-center">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <h1>
+                            <span class="titleWeb">My ballot</span>
+                        </h1>
+                    </div>
+                    <div class="col-12 text-center mb-2">
+                        <div class="dancing">
+                            <span class="slogan"> the power of the people is stronger than the people in power</span>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt-4 mt-lg-5">
+                        <p>
+                            <span id="nav-title" class="travel hover-target">info candidates</span>
+                            <span id="nav-title2" class="wildlife hover-target">vote now</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div style="margin-top: 20px; margin-left: 178px; float: left; ">
-        <p style="font-weight: bold; color: #74115a">CHUYỂN KHOẢN BCHAIN 
-            {{#if error}}
-            <span style="color: red">{{msg}}</span>
-            {{/if}}
-        </p>
-        <form action="/create-transaction" method="post">
-            <label>
-                Địa chỉ nhận
-            </label>
-            <input name="to" placeholder="Địa chỉ nhận tiền" style="padding-left: 12px;" autocomplete="off"\>
-            <br />
-            <label style="margin-top: 20px">Số tiền (BTC) </label>
-            <input name="amount" placeholder="Số tiền cần chuyển" style="padding-left: 12px;" autocomplete="off" />
-            <br />
-            <button class="btn btn-success" style="padding: 5px 10px; margin-left: 77px; margin-top: 20px;">Chuyển
-                khoản</button>
-        </form>
+
+    <div class="about-section">
+        <div class="about-close hover-target"></div>
+        <div class="section-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <img id="img-team" src="/images/team.jpg" alt="" width="300px" height="300px">
+                    </div>
+
+
+                    <div class="col-8 text-center mt-4">
+                        <p><span>Moew Moew Team</span></p>
+                    </div>
+
+                    <div class="col-lg-12 text-center ">
+                        <p>1512588 - Phạm Thị Minh Trang</p>
+                        <p>15125889 - Sằn Thanh Trà</p>
+                        <p>1512354 - Đoàn An Nguyên</p>
+                        <p>1612440 - Trần Ngô Anh Nguyên</p>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div style=" margin-top: 40px; margin-left: 40px;">
-    <p style="font-weight: bold; color: #74115a; display: inline">LỊCH SỬ GIAO DỊCH CÁ NHÂN</p>
-     <table class="table" style="font-size: 13px;">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col" >Tài khoản gửi</th>
-                <th scope="col">Tài khoản nhận</th>
-                <th scope="col">Số tiền</th>
-                <th scope="col">Timestamp </th>
-            </tr>
-        </thead>
-        <tbody id ="transaction" >
-        {{#if transactions}}
-            {{#each transactions}}
-            <tr>
-                {{#if fromAddress}}
-                    <td style="overflow-wrap: break-word;max-width: 315px; text-align:left ">
-                        {{fromAddress}}
-                    </td>
-                {{else}}
-                     <td style="overflow-wrap: break-word;max-width: 315px; text-align:left ">
-                        Hệ thống thưởng bchain
-                    </td>
-                {{/if}}
-                <td style="overflow-wrap: break-word; max-width: 315px; text-align:left">
-                    {{toAddress}}
-                </td>
-                <td>{{amount}}</td>
-                <td> {{timestamp}}</td>
-            </tr>
-            {{/each}}
-    {{/if}}
-      </tbody>
-    </table>
-    
-</div>
-<div style=" margin-top: 40px; margin-left: 40px; ">
-    <p style="font-weight: bold; color: #74115a; display: inline"> GIAO DỊCH MỚI NHẤT TOÀN HỆ THỐNG REAL TIME</p>
-     <table class="table" style="font-size: 13px;">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col" >Tài khoản gửi</th>
-                <th scope="col">Tài khoản nhận</th>
-                <th scope="col">Số tiền</th>
-                <th scope="col">Timestamp</th>
-            </tr>
-        </thead>
-        <tbody id ="list-transaction" >
-        {{#if lastestTransactions}}
-            {{#each lastestTransactions}}
-            <tr>
-                {{#if fromAddress}}
-                    <td style="overflow-wrap: break-word;max-width: 315px; text-align:left ">
-                        {{fromAddress}}
-                    </td>
-                {{else}}
-                     <td style="overflow-wrap: break-word;max-width: 315px; text-align:left ">
-                        Hệ thống thưởng bchain
-                    </td>
-                {{/if}}
-                <td style="overflow-wrap: break-word; max-width: 315px; text-align:left">
-                    {{toAddress}}
-                </td>
-                <td>{{amount}}</td>
-                <td> {{timestamp}}</td>
-            </tr>
-            {{/each}}
-    {{/if}}
-      </tbody>
-    </table>
-    
-</div>
-<div style=" margin-top: 40px; margin-left: 40px">
-    <p style="font-weight: bold; color: #74115a; display: inline">DANH SÁCH LASTEST BLOCK REAL TIME</p>
-     <table class="table" style="font-size: 13px;">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col" >preHash</th>
-                <th scope="col">Hash</th>
-                <th scope="col">Timestamp</th>
-            </tr>
-        </thead>
-        <tbody id ="list-block" >
-        {{#if lastestBlocks}}
-            {{#each lastestBlocks}}
-            <tr>
-                <td style="overflow-wrap: break-word;max-width: 315px; text-align:left ">
-                    {{previousHash}}
-                </td>
-                <td style="overflow-wrap: break-word; max-width: 315px; text-align:left">
-                    {{hash}}
-                </td>
-                <td> {{timestamp}}</td>
-            </tr>
-            {{/each}}
-    {{/if}}
-      </tbody>
-    </table>
-</div>
+
+    <div class="contact-section">
+        <div class="contact-close hover-target"></div>
+        <div class="section-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <a href="#" class="hover-target">moewmoewteam@ballot.com</a>
+                    </div>
+                    <div class="col-12 text-center social mt-4">
+                        <a href="#" class="hover-target">instagram</a>
+                        <a href="#" class="hover-target">twitter</a>
+                        <a href="#" class="hover-target">facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="travel-section">
+        <div class="travel-close hover-target"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="info-cadidate">
+                    <div class="col-md-6 col-lg-6">
+                        <img class="info-img" src="/images/1.jpg" alt="">
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <h2>Roronoa Zoro</h2>
+                        <p>
+                            <br>
+                            Xuất thân từ một "Thợ săn Hải Tặc", Roronoa Zoro là thành viên đầu tiên của băng hải tặc Mũ
+                            rơm. Là kiếm sĩ cũng như là bậc thầy kiếm thuật duy nhất trong nhóm, sử dụng thành thục 3
+                            thanh kiếm cùng lúc (Tam kiếm phái) và được biết hiện tại anh có thể sử dụng hai loại Haki.
+                            Đồng thời là một trong những thành viên mạnh nhất trong nhóm.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-cadidate">
+                    <div class="col-md-6 col-lg-6">
+                        <h2>Monkey D. Luffy</h2>
+                        <p>
+                            <br>
+                            Luffy là người sáng lập và là thuyền trưởng của băng Hải tặc Mũ Rơm, được xem là nhân vật
+                            mạnh
+                            nhất nhóm Mũ Rơm (Straw Hat) sở hữu sức mạnh của trái ác quỷ Gomu Gomu đem lại cho cậu khả
+                            năng
+                            co giãn các bộ phận như cao su đồng thời là người duy nhất hiện tại trong nhóm sử dụng thành
+                            thục được ba loại sức mạnh của Haki. Ước mơ của cậu là trở thành Vua Hải Tặc (Pirate King),
+                            người tự do nhất trên biển, bằng cách tìm ra kho báu huyền thoại của Gold D. Roger (Vua Hải
+                            Tặc)
+                            đời trước.
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <img class="info-img" src="/images/2.jpg" alt="">
+                    </div>
+                </div>
+
+                <div class="info-cadidate">
+                    <div class="col-md-6 col-lg-6">
+                        <img class="info-img" src="/images/3.jpg" alt="">
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <h2>Tony Tony Chopper</h2>
+                        <p>
+                            <br>
+                            Là bác sĩ của băng Mũ Rơm trong loạt anime và manga One Piece của Oda Eiichiro. Cậu đến
+                            từ
+                            Drum Island, thành viên duy nhất băng được sinh ra ở Grand Line và là thành viên thứ sáu của
+                            băng Mũ Rơm, đồng thời là người thứ năm gia nhập, cũng là thành viên nhỏ tuổi trên tàu (15
+                            tuổi). Cậu sở hữu năng lực của trái ác quỷ Hito Hito no Mi. Cậu sử dụng Rumble Ball (tên
+                            tiếng
+                            Nhật:ラ ン ブ ル ボ ー ル, tên Latinh:Ranburu Boru) để tăng cường khả năng của trái Hito Hito no
+                            Mi.
+                            Khi sử dụng viên đầu tiên, cậu có thể biến thành bảy hình dạng khác nhau, khi sử dụng viên
+                            thứ
+                            hai, cậu không thể kiểm soát được những hìng dạng như ý muốn, khi sử dụng đến viên thứ ba,
+                            cậu
+                            biến thành một con quái vật và mất kiểm soát. Tuy nhiên, sau timeskip, cậu đã kiểm soát được
+                            như
+                            ý muốn và còn có nhiều hình dáng hơn nữa.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-cadidate">
+                    <div class="col-md-6 col-lg-6">
+                        <h2>Vinsmoke Sanji</h2>
+                        <p>
+                            <br>
+                            Là đầu bếp của Băng Hải tặc mũ rơm. Anh trước kia sinh ở North Blue, thuộc dòng tộc sát thủ
+                            Vinsmoke sống cùng Zeff và được Zeff đào tạo tại Biển Đông, hình ảnh của Sanji lúc nhỏ là
+                            một
+                            cậu bé tóc vàng, đầy ước mơ, và mong muốn được nhìn thấy All Blue cũng xuất phát từ đó.
+
+                            Được biết anh cũng có khả năng sử dụng được hai loại Haki. Đồng thời là một trong 03 người
+                            mạnh
+                            nhất nhóm, sức mạnh của anh thường được so sánh với Roronoa Zoro.
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <img class="info-img" src="/images/4.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wildlife-section">
+        <div class="wildlife-close hover-target"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="wrap-vote">
+                    <form>
+                        <div class="option-group">
+                            <div class="option-container">
+
+                                <input class="option-input" id="option-1" type="radio" value="Zoro" name="options" />
+                                <input class="option-input" id="option-2" type="radio" value="Luffy" name="options" />
+
+                                <label id="vote1" class="option" for="option-1">
+                                    <span class="option__indicator"></span>
+                                    <span class="option__label">
+                                        Roronoa Zoro
+                                    </span>
+                                </label>
+
+                                <label id="vote2" class="option" for="option-2">
+                                    <span class="option__indicator"></span>
+                                    <span class="option__label">
+                                        Monkey D. Luffy
+                                    </span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="option-group">
+                            <div class="option-container">
+
+                                <input class="option-input" id="option-3" type="radio" value="Chopper" name="options" />
+                                <input class="option-input" id="option-4" type="radio" value="Sanji" name="options" />
+
+                                <label id="vote3" class="option" for="option-3">
+                                    <span class="option__indicator"></span>
+                                    <span class="option__label">
+                                        Tony Tony Chopper
+                                    </span>
+                                </label>
+
+                                <label id="vote4" class="option" for="option-4">
+                                    <span class="option__indicator"></span>
+                                    <span class="option__label">
+                                        Vinsmoke Sanji
+                                    </span>
+                                </label>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
+                    <input type="text" id="candidate" hidden />
+
+
+
+                    <a id="submit" href="#" class="btn btn-primary">Vote</a>
+
+                </div>
+
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class='cursor' id="cursor"></div>
+    <div class='cursor2' id="cursor2"></div>
+    <div class='cursor3' id="cursor3"></div>
+
+    <!-- Link to page
+================================================== -->
+
+    <a href="/logout" class="link-to-portfolio hover-target"></a>
+    {{!-- end test --}}
+
+
+    {{!-- <div class="wrap-vote">
+        {{!-- <img class="bg" src="/images/vote-removebg.png" alt="Girl in a jacket"> --}}
+    <form>
+        <div class="option-group">
+            <div class="option-container">
+
+                <input class="option-input" id="option-1" type="radio" value="Zoro" name="options" />
+                <input class="option-input" id="option-2" type="radio" value="Luffy" name="options" />
+
+                <label id="vote1" class="option" for="option-1">
+                    <span class="option__indicator"></span>
+                    <span class="option__label">
+                        Roronoa Zoro
+                    </span>
+                </label>
+
+                <label id="vote2" class="option" for="option-2">
+                    <span class="option__indicator"></span>
+                    <span class="option__label">
+                        Monkey D. Luffy
+                    </span>
+                </label>
+
+            </div>
+        </div>
+        <div class="option-group">
+            <div class="option-container">
+
+                <input class="option-input" id="option-3" type="radio" value="Chopper" name="options" />
+                <input class="option-input" id="option-4" type="radio" value="Sanji" name="options" />
+
+                <label id="vote3" class="option" for="option-3">
+                    <span class="option__indicator"></span>
+                    <span class="option__label">
+                        Tony Tony Chopper
+                    </span>
+                </label>
+
+                <label id="vote4" class="option" for="option-4">
+                    <span class="option__indicator"></span>
+                    <span class="option__label">
+                        Vinsmoke Sanji
+                    </span>
+                </label>
+
+            </div>
+        </div>
+    </form>
+
+
+
+
+    <input type="text" id="candidate" hidden />
+
+
+
+    <a id="submit" href="#" onclick="voteForCandidate()" class="btn btn-primary">Vote</a>
+
+    </div>
+
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div> --}}
+
+
+
+
+</body>
+
+
+
+<script>
+
+
+    /* Please ❤ this if you like it! */
+
+
+    (function ($) {
+        "use strict";
+
+        //Page cursors
+
+        document.getElementsByTagName("body")[0].addEventListener("mousemove", function (n) {
+            t.style.left = n.clientX + "px",
+                t.style.top = n.clientY + "px",
+                e.style.left = n.clientX + "px",
+                e.style.top = n.clientY + "px",
+                i.style.left = n.clientX + "px",
+                i.style.top = n.clientY + "px"
+        });
+        var t = document.getElementById("cursor"),
+            e = document.getElementById("cursor2"),
+            i = document.getElementById("cursor3");
+        function n(t) {
+            e.classList.add("hover"), i.classList.add("hover")
+        }
+        function s(t) {
+            e.classList.remove("hover"), i.classList.remove("hover")
+        }
+        s();
+        for (var r = document.querySelectorAll(".hover-target"), a = r.length - 1; a >= 0; a--) {
+            o(r[a])
+        }
+        function o(t) {
+            t.addEventListener("mouseover", n), t.addEventListener("mouseout", s)
+        }
+
+
+        //About page
+
+        $(".about-text").on('click', function () {
+            $("body").addClass("about-on");
+        });
+        $(".about-close").on('click', function () {
+            $("body").removeClass("about-on");
+        });
+
+
+        //Contact page
+
+        $(".contact-text").on('click', function () {
+            $("body").addClass("contact-on");
+        });
+        $(".contact-close").on('click', function () {
+            $("body").removeClass("contact-on");
+        });
+
+
+        //Travel portfolio page
+
+        $(".travel").on('click', function () {
+            $("body").addClass("travel-on");
+        });
+        $(".travel-close").on('click', function () {
+            $("body").removeClass("travel-on");
+        });
+
+
+        //Wildlife portfolio page
+
+        $(".wildlife").on('click', function () {
+            $("body").addClass("wildlife-on");
+        });
+        $(".wildlife-close").on('click', function () {
+            $("body").removeClass("wildlife-on");
+        });
+
+
+        //Nature portfolio page
+
+        $(".nature").on('click', function () {
+            $("body").addClass("nature-on");
+        });
+        $(".nature-close").on('click', function () {
+            $("body").removeClass("nature-on");
+        });
+
+
+    })(jQuery);
+
+
+</script>
+
+<script src="/js/index.js"></script>
+
+<script src="/js/vote.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@0.18.2/dist/web3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+</html>
