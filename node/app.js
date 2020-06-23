@@ -9,11 +9,20 @@ var miner = new (require('./miner/block-chain').blockChain)();
 connecter.emit('voting', {name: 'tra'});
 connecter.on('validate-voting', (data)=>{
 	miner.createTransaction(data);
-	miner.miningPendingTransactions();
-	console.log(miner.getLatestBlock())
+	let newBlock = miner.miningPendingTransactions();
+	if(newBlock !== false){
+		connecter.emit('validated-ballot', {
+		newBlock: newBlock,
+		preBlock : miner.getLatestBlock()
+		});
+	}
 });
 connecter.on('get-result', (data)=>{
   	console.log('res: ', data)
+});
+connecter.on('receive-lastest-block', (lastestBlock)=>{
+	// let lastestBlock = miner.getLatestBlock();
+		
 });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

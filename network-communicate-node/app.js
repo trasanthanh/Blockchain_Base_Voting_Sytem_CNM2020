@@ -8,8 +8,9 @@ var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
 var totalNode = 0;
-var pendingResult = [];
-var id = 0;
+var pendingAccept = [];
+var pendingRes = [];
+var idAccept = 0;
 // event network
 io.on("connection", function (socket) {
 	totalNode++;
@@ -32,26 +33,27 @@ io.on("connection", function (socket) {
 	socket.on("voting", (ballot) => {
 		ballot = {id: socket.id, ballot : ballot};
 		io.emit("validate-voting", ballot);
-		pendingResult.push({client: socket, ballot : ballot});
+		pendingAccept.push({client: socket, ballot : ballot});
 	});
 	socket.on('validated-ballot', (data)=>{
 		if(data){
 			data.forEach(data => {
 				let resElement;
-				for (let i = 0, length = pendingResult.length; i < length; i++ ){
-					if(pendingResult[i].ballot.id == data.id && JSON.stringify(pendingResult[i].ballot.ballot) == JSON.stringify(data.ballot)){
-						resElement = pendingResult[i];
-						pendingResult.splice(i, 1);
+				for (let i = 0, length = pendingAccept.length; i < length; i++ ){
+					if(pendingAccept[i].ballot.id == data.id && JSON.stringify(pendingAccept[i].ballot.ballot) == JSON.stringify(data.ballot)){
+						resElement = pendingAccept[i];
+						pendingRes.push({
+							client: resElement,
+							acceptId = idAccept++
+						})
+						pendingAccept.splice(i, 1);
 						break;
 					}
-				}
-				if(resElement){
-					resElement.client.emit('get-result', resElement.ballot);
 				}
 			});
 		}
 		
-	})
+	});
 });
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

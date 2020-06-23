@@ -1,4 +1,5 @@
 const SHA256 = require("crypto-js/sha256");
+const { connect } = require("socket.io-client");
 const EC = require('elliptic').ec;
 const ecdsa = new EC('secp256k1');
 class Transaction{
@@ -90,10 +91,18 @@ class Blockchain{
         const block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
         block.mineBlock(this.difficulty);
         this.chain.push(block);
-        connecter.emit('validated-ballot', this.pendingTransactions);
         this.pendingTransactions = [
             new Transaction(null, miningRewardAddress, this.miningReward)
         ];
+        return block;
+    }
+    pushLastestBlock(newBlock, preBlock){
+        if(newBlock.hash == preBlock.previousHash && JSON.stringify(this.getLatestBlock) == previousBlock
+            && SHA256(newBlock.previousHash + newBlock.timestamp + JSON.stringify(newBlock.transactions) + newBlock.nonce).toString() == newBlock.hash){
+                this.chain.push(block);
+                return true;
+            }
+        return false;
     }
     createTransaction(transaction) {
         // if (!transaction.toAddress) {
@@ -112,7 +121,6 @@ class Blockchain{
         this.pendingTransactions.push(transaction);
         return 1;
     }
-
     isChainValid() {
         for (let i = 1; i < this.chain.length; i++){
             const currentBlock = this.chain[i];
@@ -128,34 +136,34 @@ class Blockchain{
         }
         return true;
     }
-    getBalanceOfAddress(address){
-        let balance = 0;
-        for(const block of this.chain){
-            for(const trans of block.transactions){
-                if (trans.fromAddress === address){
-                    balance -= parseInt(trans.amount);
-                }
-                if(trans.toAddress === address){
-                    balance += parseInt(trans.amount);
-                }
-            }
-        }
-        return balance;
-    }
-    getTransactionOfAddress(address){
-        let transactions = [];
-        for(const block of this.chain){
-            for(const trans of block.transactions){
-                if (trans.fromAddress == address || trans.toAddress == address){
-                   transactions.push(trans);
-                }
-            }
-        }
-        return transactions.length > 0 ? transactions : null;
-    }
-    getListPendingTransactions(){
-        return  this.pendingTransactions;
-    }
+    // getBalanceOfAddress(address){
+    //     let balance = 0;
+    //     for(const block of this.chain){
+    //         for(const trans of block.transactions){
+    //             if (trans.fromAddress === address){
+    //                 balance -= parseInt(trans.amount);
+    //             }
+    //             if(trans.toAddress === address){
+    //                 balance += parseInt(trans.amount);
+    //             }
+    //         }
+    //     }
+    //     return balance;
+    // }
+    // getTransactionOfAddress(address){
+    //     let transactions = [];
+    //     for(const block of this.chain){
+    //         for(const trans of block.transactions){
+    //             if (trans.fromAddress == address || trans.toAddress == address){
+    //                transactions.push(trans);
+    //             }
+    //         }
+    //     }
+    //     return transactions.length > 0 ? transactions : null;
+    // }
+    // getListPendingTransactions(){
+    //     return  this.pendingTransactions;
+    // }
 }
 
 module.exports = {
