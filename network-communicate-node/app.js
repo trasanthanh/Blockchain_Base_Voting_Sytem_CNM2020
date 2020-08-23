@@ -9,8 +9,6 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 var totalNode = 0;
 var pendingAccept = [];
-var pendingRes = [];
-var idAccept = 0;
 // event network
 io.on("connection", function (socket) {
 	totalNode++;
@@ -36,24 +34,17 @@ io.on("connection", function (socket) {
 		pendingAccept.push({client: socket, ballot : ballot});
 	});
 	socket.on('validated-ballot', (data)=>{
-		if(data){
-			data.forEach(data => {
-				let resElement;
-				for (let i = 0, length = pendingAccept.length; i < length; i++ ){
-					if(pendingAccept[i].ballot.id == data.id && JSON.stringify(pendingAccept[i].ballot.ballot) == JSON.stringify(data.ballot)){
-						resElement = pendingAccept[i];
-						pendingRes.push({
-							client: resElement,
-							acceptId = idAccept++
-						})
-						pendingAccept.splice(i, 1);
-						break;
-					}
-				}
-			});
-		}
-		
+		console.log('nhan data');
+		socket.emit('get-result', data);
 	});
+	socket.on('get-chain', ()=>{
+		console.log('receive require chain list');
+		socket.broadcast.emit("require-send-list-chain");
+	});
+	socket.on('get-list-chain', (chains)=>{
+		console.log('send chain to client')
+		socket.emit('receive-chain', chains);
+	})
 });
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

@@ -18,12 +18,20 @@ connecter.on('validate-voting', (data)=>{
 	}
 });
 connecter.on('get-result', (data)=>{
-  	console.log('res: ', data)
+	  console.log('res: ', data);
+	  console.log('require-list-chain');
+	  connecter.emit('get-chain');
 });
 connecter.on('receive-lastest-block', (lastestBlock)=>{
 	// let lastestBlock = miner.getLatestBlock();
 		
 });
+connecter.on('require-send-list-chain',()=>{
+	connecter.emit('get-list-chain',miner.getListChain());
+})
+connecter.on('receive-chain', (chains)=>{
+	console.log('receive list block chain', chains[1].transactions);
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

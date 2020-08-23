@@ -1,5 +1,4 @@
 const SHA256 = require("crypto-js/sha256");
-const { connect } = require("socket.io-client");
 const EC = require('elliptic').ec;
 const ecdsa = new EC('secp256k1');
 class Transaction{
@@ -96,12 +95,10 @@ class Blockchain{
         ];
         return block;
     }
-    pushLastestBlock(newBlock, preBlock){
-        if(newBlock.hash == preBlock.previousHash && JSON.stringify(this.getLatestBlock) == previousBlock
-            && SHA256(newBlock.previousHash + newBlock.timestamp + JSON.stringify(newBlock.transactions) + newBlock.nonce).toString() == newBlock.hash){
-                this.chain.push(block);
+    isValidLastestBlock(newBlock, preBlock){
+        if(newBlock.previousHash == preBlock.hash && JSON.stringify(this.getLatestBlock) == previousBlock && SHA256(newBlock.previousHash + newBlock.timestamp + JSON.stringify(newBlock.transactions) + newBlock.nonce).toString() == newBlock.hash){
                 return true;
-            }
+        }
         return false;
     }
     createTransaction(transaction) {
@@ -135,6 +132,21 @@ class Blockchain{
             }
         }
         return true;
+    }
+    updateChain(newBlock, preBlock, totalRecords){
+        if(totalRecords == this.chain.length){
+            if(this.isValidLastestBlock(newBlock, this.chain[this.chain.length -2]) == true && this.chain[this,this.chain.length -2].timestamp > newBlock.timestamp ){
+                this.chain.pop();
+                this.chain.push(newBlock);
+            }
+        } else if(totalRecords == this.length -1 && this.isValidLastestBlock(newBlock, this.chain[this.chain.length -1]) == true){
+            this.chain.push(newBlock);
+        } else{
+            connecter.emit('get-chain');
+        }
+    }
+    getListChain(){
+        return this.chain;
     }
     // getBalanceOfAddress(address){
     //     let balance = 0;
